@@ -1,5 +1,12 @@
 include core/arch/arm/cpu/cortex-armv8-0.mk
 
+$(call force,CFG_TEE_CORE_NB_CORE,4)
+CFG_TZDRAM_START    ?= 0x81080000
+CFG_TZDRAM_SIZE     ?= 0x00E00000
+CFG_SHMEM_START     ?= 0x80E00000
+CFG_SHMEM_SIZE      ?= 0x00200000
+CFG_TEE_RAM_VA_SIZE ?= 0x00100000
+
 # 32-bit flags
 core_arm32-platform-aflags	+= -mfpu=neon
 
