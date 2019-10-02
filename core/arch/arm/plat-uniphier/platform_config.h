@@ -7,6 +7,8 @@
 #ifndef PLATFORM_CONFIG_H
 #define PLATFORM_CONFIG_H
 
+#include <mm/generic_ram_layout.h>
+
 /* Make stacks aligned to data cache line length */
 #define STACK_ALIGNMENT		64
 
@@ -43,24 +45,6 @@
 #define DRAM0_BASE		0x80000000
 #define DRAM0_SIZE		0xC0000000
 
-#define TZDRAM_BASE		0x81080000
-#define TZDRAM_SIZE		(14 * 1024 * 1024)
-
-#define TEE_SHMEM_START		0x80E00000
-#define TEE_SHMEM_SIZE		(2 * 1024 * 1024)
-
-#define CFG_TEE_CORE_NB_CORE	4
-
-#define TEE_RAM_VA_SIZE		(1024 * 1024)
-
-#define TEE_LOAD_ADDR		TZDRAM_BASE
-
-#define TEE_RAM_PH_SIZE		TEE_RAM_VA_SIZE
-#define TEE_RAM_START		TZDRAM_BASE
-#define TA_RAM_START		ROUNDUP((TZDRAM_BASE + TEE_RAM_VA_SIZE), \
-					CORE_MMU_DEVICE_SIZE)
-
-#define TA_RAM_SIZE		ROUNDDOWN((TZDRAM_SIZE - TEE_RAM_VA_SIZE),\
-					  CORE_MMU_DEVICE_SIZE)
+#define CFG_TEE_LOAD_ADDR	CFG_TZDRAM_START
 
 #endif /* PLATFORM_CONFIG_H */
