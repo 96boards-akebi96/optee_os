@@ -17,25 +17,21 @@
 #include <tee/entry_std.h>
 #include <tee/entry_fast.h>
 
-register_phys_mem(MEM_AREA_IO_SEC,
-                  ROUNDDOWN(CONSOLE_UART_BASE, CORE_MMU_DEVICE_SIZE),
-                  CORE_MMU_DEVICE_SIZE);
+register_phys_mem_pgdir(MEM_AREA_IO_SEC,
+                  ROUNDDOWN(CONSOLE_UART_BASE, CORE_MMU_PGDIR_SIZE),
+                  CORE_MMU_PGDIR_SIZE);
 
-register_phys_mem(MEM_AREA_IO_SEC,
-                  ROUNDDOWN(GIC_BASE, CORE_MMU_DEVICE_SIZE),
-                  CORE_MMU_DEVICE_SIZE);
+register_phys_mem_pgdir(MEM_AREA_IO_SEC,
+                  ROUNDDOWN(GIC_BASE, CORE_MMU_PGDIR_SIZE),
+                  CORE_MMU_PGDIR_SIZE);
 
-register_phys_mem(MEM_AREA_IO_SEC,
-                  ROUNDDOWN(GIC_BASE + GICD_OFFSET, CORE_MMU_DEVICE_SIZE),
-                  CORE_MMU_DEVICE_SIZE);
+register_phys_mem_pgdir(MEM_AREA_IO_SEC,
+                  ROUNDDOWN(GIC_BASE + GICD_OFFSET, CORE_MMU_PGDIR_SIZE),
+                  CORE_MMU_PGDIR_SIZE);
 
-static void main_fiq(void);
 static struct gic_data gic_data;
 
 static const struct thread_handlers handlers = {
-	.std_smc = tee_entry_std,
-	.fast_smc = tee_entry_fast,
-	.nintr = main_fiq,
 	.cpu_on = cpu_on_handler,
 	.cpu_off = pm_do_nothing,
 	.cpu_suspend = pm_do_nothing,
@@ -64,7 +60,7 @@ void main_init_gic(void)
 	itr_init(&gic_data.chip);
 }
 
-static void main_fiq(void)
+void itr_core_handler(void)
 {
 	gic_it_handle(&gic_data);
 }
