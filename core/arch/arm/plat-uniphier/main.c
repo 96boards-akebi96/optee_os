@@ -29,6 +29,13 @@ register_phys_mem_pgdir(MEM_AREA_IO_SEC,
                   ROUNDDOWN(GIC_BASE + GICD_OFFSET, CORE_MMU_PGDIR_SIZE),
                   CORE_MMU_PGDIR_SIZE);
 
+#ifdef DRAM0_BASE
+register_ddr(DRAM0_BASE + 0x02000000, DRAM0_SIZE - 0x02000000);
+#endif
+#ifdef DRAM1_BASE
+register_ddr(DRAM1_BASE, DRAM1_SIZE);
+#endif
+
 static struct gic_data gic_data;
 
 static const struct thread_handlers handlers = {
