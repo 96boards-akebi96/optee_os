@@ -29,7 +29,7 @@
  *
  *  0xXXXX_XXXX
  *    Linux kernel and user space             | DRAM#0-#x | Normal memory
- *  0x8200_0000                               -           -
+ *  0x8200_0000 [DRAM0_BASE]                  -           -
  *    unused                                  |           |
  *  0x81E8_0000                               |           |
  *    TA RAM: 13 MiB                          | TZDRAM    |
@@ -43,11 +43,11 @@
  *    reserved                                |           |
  *  0x8008_0000                               |           |
  *    BL2: 512 KiB                            |           |
- *  0x8000_0000 [DRAM0_BASE]                  -           -
+ *  0x8000_0000 [CFG_DRAM0_BASE]              -           -
  */
 
-#define DRAM0_BASE		0x80000000
-#define DRAM0_SIZE		0xC0000000
+#define DRAM0_BASE		(CFG_DRAM0_BASE + CFG_DRAM0_RSV_SIZE)
+#define DRAM0_SIZE		(CFG_DRAM0_SIZE - CFG_DRAM0_RSV_SIZE)
 
 #define CFG_TEE_LOAD_ADDR	CFG_TZDRAM_START
 
