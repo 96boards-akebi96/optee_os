@@ -25,20 +25,24 @@
 #define CONSOLE_UART_CLK_IN_HZ	58820000
 
 /*
- *  0xXXXX_XXXX                               -           -
- *    Linux kernel                            |           |
- *  0x9600_0000                               | DRAM#0-#x | Normal memory
- *    Reserved area for Linux drivers         |           |
+ * UniPhier memory map
+ *
+ *  0xXXXX_XXXX
+ *    Linux kernel and user space             | DRAM#0-#x | Normal memory
  *  0x8200_0000                               -           -
- *    TA RAM: 14MiB                           |           |
- *  0x8118_0000                               | TZDRAM    |
- *    TEE RAM: 1 MiB (CFG_TEE_RAM_VA_SIZE)    |           | Secure memory
- *  0x8108_0000 [TZDRAM_BASE, BL32_LOAD_ADDR] -           |
- *    BL31 runtime (defined in ATF code)      |           |
+ *    unused                                  |           |
+ *  0x81E8_0000                               |           |
+ *    TA RAM: 13 MiB                          | TZDRAM    |
+ *  0x8118_0000                               |           | Secure memory
+ *    TEE RAM: 1 MiB (CFG_TEE_RAM_VA_SIZE)    |           |
+ *  0x8108_0000 [TZDRAM_START]                -           |
+ *    BL31 runtime: 512 KiB                   |           |
  *  0x8100_0000                               |           -
- *    TEE-REE Shared memory                   | DRAM#0    |
- *  0x80E0_0000                               |           | Normal memory
- *    Reserved area for ucode                 |           |
+ *    Shared memory: 2 MiB (CFG_SHMEM_SIZE)   |           |
+ *  0x80E0_0000 [CFG_SHMEM_START]             | DRAM#0    | Normal memory
+ *    reserved                                |           |
+ *  0x8008_0000                               |           |
+ *    BL2: 512 KiB                            |           |
  *  0x8000_0000 [DRAM0_BASE]                  -           -
  */
 
